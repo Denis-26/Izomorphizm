@@ -159,12 +159,12 @@ int Graph::ShortestCircle()
 }
 int Graph::Deikstra(int start)
 {
-    int indx, distance1[C];
+    int indx;
     bool used[C];
     for (int i = 0; i < v; ++i)
     {
         used[i] = false;
-        distance1[i] = 0;
+        distance1[i] = 10000000;
     }
     queue<int> q;
     q.push(start);
@@ -180,23 +180,29 @@ int Graph::Deikstra(int start)
         {
             if (M[indx][i])
             {
-                if (M[indx][i]+distance1[indx] > distance1[i] && i != start)
+                if (M[indx][i]+distance1[indx] < distance1[i])
                     distance1[i] = distance1[indx] + M[indx][i];
                 q.push(i);
             }
 
         }
     }
-
     int max1 = 0;
+    int vers = 0;
+    for (int i = 0; i<v; ++i)
+        cout << distance1[i] << " ";
+    cout << endl;
     for (int i = 0; i < v; ++i)
         if (distance1[i] > max1)
+        {
             max1 = distance1[i];
-    return max1;
+            vers = i;   
+        }
+    return vers;
 }
 int Graph::diamGraph()
 { 
-    int result = Deikstra(Deikstra(0));
+    int result = distance1[Deikstra(Deikstra(0))];
     cout << "Diam of Graph = " << result << endl;
     return result;
 }

@@ -19,6 +19,7 @@ public:              //Поля
     int v;
     int G;        //Является ли граф деревом?
     int pasport[C];
+    int distance1[C];
 
 public:              //Функции
 
