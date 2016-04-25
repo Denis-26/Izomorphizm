@@ -27,7 +27,8 @@ public:              //Функции
     Graph(string string1);
     void Pasport();
     int ShortestCircle();
-
+    int diamGraph();
+    int Deikstra(int start);
 };
 
 #endif

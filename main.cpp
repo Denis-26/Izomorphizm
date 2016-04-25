@@ -80,7 +80,7 @@ int perm(Graph *graph1, Graph *graph2)     //Генерация всех пер�
 
 
 
-int main()
+int main()                                //ГЛАВНАЯ ФУНКЦИЯ. 
 {
     float duration;
     clock_t start, finish;
@@ -103,6 +103,16 @@ int main()
             cout << "Time: " << duration << endl << endl;
             return 0;
         }
+
+    if (graph1.diamGraph() != graph2.diamGraph()) //Проверка Диаметра графов.
+    {
+        cout << "Graphs are not isomorphic - diametres are not equal" << endl;
+        return 0;
+    }
+
+
+
+
 
 
     if (graph1.v != graph2.v)             //Проверка кол-во вершин.
