@@ -78,16 +78,14 @@ int perm(Graph *graph1, Graph *graph2)     //Генерация всех пер�
     return 0;
 }
 
-
-
 int main()                                //ГЛАВНАЯ ФУНКЦИЯ. 
 {
     float duration;
     clock_t start, finish;
     start = clock();
 
-    string s1 = "matrix.txt";
-    string s2 = "matrix1.txt";
+    string s1 = "m.txt";
+    string s2 = "m1.txt";
     Graph graph1(s1);
     Graph graph2(s2);
     cout << endl;

@@ -76,7 +76,7 @@ bool Graph::bipartitle()
     int indx;
     int k = 0;
 
-    while(k != (v)-1)
+    while(k != (v-1))
     {
         q.push(k);
         if (color1[k] == 0)
@@ -87,10 +87,15 @@ bool Graph::bipartitle()
             q.pop();
             for (int i = 0; i < v; ++i)
             {
-                if (this->M[indx][i])
+                if (M[indx][i])
                 {
                     if (color1[i] == 0)
-                        color1[i] = 2;
+                    {
+                        if (color1[indx] == 1)
+                            color1[i] = 2;
+                        else if (color1[indx] == 2)
+                            color1[i] = 1;
+                    }
                     else if (color1[i] == color1[indx])
                         return 0;
                 }
@@ -184,7 +189,6 @@ int Graph::Deikstra(int start)
                     distance1[i] = distance1[indx] + M[indx][i];
                 q.push(i);
             }
-
         }
     }
     int max1 = 0;
