@@ -97,7 +97,7 @@ bool Graph::bipartitle()
                             color1[i] = 1;
                     }
                     else if (color1[i] == color1[indx])
-                        return 0;
+                    	return 0;
                 }
             }
         }
