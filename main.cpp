@@ -3,7 +3,7 @@
 #include "graph.h"
 #include <algorithm>
 using namespace std;
-int N = 0; //Вот
+int N = 0; 
 
 
 void Swap(int k, int j, Graph *matrix);

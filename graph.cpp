@@ -1,5 +1,5 @@
 #include "graph.h"
-
+//Вот
 Graph::Graph(string string1)
 {
     ifstream f(string1);
@@ -36,6 +36,7 @@ void Graph::Pasport()
 
 int Graph::CompCon()
 {
+	//Тут
     vector<bool> used(v, false);
     bool con_discon = true;
     int indx, count1 = 1;
