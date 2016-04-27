@@ -101,14 +101,6 @@ int main()                                //ГЛАВНАЯ ФУНКЦИЯ.
             cout << "Time: " << duration << endl << endl;
             return 0;
         }
-
-    
-
-
-
-
-
-
     if (graph1.v != graph2.v)             //Проверка кол-во вершин.
     {
         cout << "Graphs are not isomorphic - tops are not equal" << endl;
