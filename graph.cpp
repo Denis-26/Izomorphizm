@@ -38,7 +38,7 @@ int Graph::CompCon()
 {
     vector<bool> used(v, false);
     bool con_discon = true;
-    int indx, count1 = 0;
+    int indx, count1 = 1;
     for (int j = 0; j < v; ++j)
     {
         queue<int> q;
@@ -60,15 +60,17 @@ int Graph::CompCon()
         if (con_discon)
         {
             for (int i = 0; i < v; ++i)
-                if (!used[i])
+            {
+            	if (!used[i])
                 {
-                    con_discon = false;
+                    con_discon = false;;
                     count1++;
                     break;
                 }
+            }
         }
     }
-    return count1+1;
+    return count1;
 }
 bool Graph::bipartitle()
 {
@@ -193,9 +195,6 @@ int Graph::Deikstra(int start)
     }
     int max1 = 0;
     int vers = 0;
-    for (int i = 0; i<v; ++i)
-        cout << distance1[i] << " ";
-    cout << endl;
     for (int i = 0; i < v; ++i)
         if (distance1[i] > max1)
         {

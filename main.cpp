@@ -102,11 +102,7 @@ int main()                                //ГЛАВНАЯ ФУНКЦИЯ.
             return 0;
         }
 
-    if (graph1.diamGraph() != graph2.diamGraph()) //Проверка Диаметра графов.
-    {
-        cout << "Graphs are not isomorphic - diametres are not equal" << endl;
-        return 0;
-    }
+    
 
 
 
@@ -127,10 +123,19 @@ int main()                                //ГЛАВНАЯ ФУНКЦИЯ.
         return 0;
     }
 
-    if (graph1.CompCon() != graph2.CompCon()) //Проверка компонент связности.
+    int Connection1 = graph1.CompCon(), Connection2 = graph2.CompCon(); //Проверка компонент связности.
+    if (Connection1 != Connection2) 										
     {
          cout << "Graphs are not isomorphic - connection components are not equal" << endl << endl;
          return 0;
+    }
+    else if (Connection1 == 1)
+    {
+    	if (graph1.diamGraph() != graph2.diamGraph()) //Проверка Диаметра графов.
+    	{
+        	cout << "Graphs are not isomorphic - diametres are not equal" << endl;
+        	return 0;
+    	}
     }
 
     if (graph1.bipartitle() != graph2.bipartitle()) //Проверка на двудольность.
