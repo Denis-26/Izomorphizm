@@ -25,11 +25,12 @@ public:              //Функции
 
     int CompCon();
     bool bipartitle();
-    Graph(string string1);
+    Graph();
     void Pasport();
     int ShortestCircle();
     int diamGraph();
     int Deikstra(int start);
+    void init(string str);
 };
 
 #endif

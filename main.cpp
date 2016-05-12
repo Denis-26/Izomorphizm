@@ -80,83 +80,92 @@ int perm(Graph *graph1, Graph *graph2)     //Генерация всех пер�
 
 int main()                                //ГЛАВНАЯ ФУНКЦИЯ. 
 {
-    float duration;
-    clock_t start, finish;
-    start = clock();
+	string tests[100] = {"1","11","2","22","3","33","4","44","5","55","6","66","7","77"};
+	Graph graph1;
+	Graph graph2;    
 
-    string s1 = "m.txt";
-    string s2 = "m1.txt";
-    Graph graph1(s1);
-    Graph graph2(s2);
-    cout << endl;
-
-    graph1.Pasport();                       //Проверка паспортов графа.
-    graph2.Pasport();
-    for (int i = 0; i < graph1.v; ++i)
-        if (graph1.pasport[i] != graph2.pasport[i])
-        {
-            cout << "Graphs are not isomorphic - PASPORTS are not equal" << endl;
-            finish = clock();
-            duration = (float)(finish - start) / CLOCKS_PER_SEC;
-            cout << "Time: " << duration << endl << endl;
-            return 0;
-        }
-    if (graph1.v != graph2.v)             //Проверка кол-во вершин.
-    {
-        cout << "Graphs are not isomorphic - tops are not equal" << endl;
-        return 0;
-    }
-
-
-    if (graph1.ribs != graph2.ribs)         //Проверка кол-во ребер.
+    for (int i = 1; i<7; i+=2)
     {
 
-        cout << "Graphs are not isomorphic - ribs are not equal" << endl << endl;
-        return 0;
-    }
+    	float duration;
+    	clock_t start, finish;
+    	start = clock();
+	    string s1 = tests[i]+".in";
+	    string s2 = tests[i-1]+".in";
+		cout << s1 << endl;
+		cout << s2 << endl;
+	    
+	    graph1.init(s1);
+	    graph2.init(s2);
 
-    int Connection1 = graph1.CompCon(), Connection2 = graph2.CompCon(); //Проверка компонент связности.
-    if (Connection1 != Connection2) 										
-    {
-         cout << "Graphs are not isomorphic - connection components are not equal" << endl << endl;
-         return 0;
-    }
-    else if (Connection1 == 1)
-    {
-    	if (graph1.diamGraph() != graph2.diamGraph()) //Проверка Диаметра графов.
-    	{
-        	cout << "Graphs are not isomorphic - diametres are not equal" << endl;
-        	return 0;
-    	}
-    }
-
-    if (graph1.bipartitle() != graph2.bipartitle()) //Проверка на двудольность.
-    {
-        cout << "Graphs are not isomorphic - bipartitle is not equal" << endl;
-        return 0;
-    }
-
-
-    if (graph1.G > 0 && graph2.G > 0)
-    {
-        if (graph1.ShortestCircle() != graph2.ShortestCircle())
-        {
-            cout << "Graphs are not isomorphic - shortest circles are not equal" << endl;
-            return 0;
-        }
-    }
-
-    if (perm(&graph1, &graph2))                                        //Перебор всех вариантов матриц смежности.
-    {
-        cout << "Graphs are isomorphic" << endl;
-    }
-    else
-        cout << "Graphs are not isomorphic" << endl;
+	    graph1.Pasport();                       //Проверка паспортов графа.
+	    graph2.Pasport();
+	    for (int i = 0; i < graph1.v; ++i)
+	        if (graph1.pasport[i] != graph2.pasport[i])
+	        {
+	            cout << "Graphs are not isomorphic - PASPORTS are not equal" << endl;
+	            finish = clock();
+	            duration = (float)(finish - start) / CLOCKS_PER_SEC;
+	            cout << "Time: " << duration << endl << endl;
+	            return 0;
+	        }
+	    if (graph1.v != graph2.v)             //Проверка кол-во вершин.
+	    {
+	        cout << "Graphs are not isomorphic - tops are not equal" << endl;
+	        return 0;
+	    }
 
 
+	    if (graph1.ribs != graph2.ribs)         //Проверка кол-во ребер.
+	    {
 
-    finish = clock();
-    duration = (float)(finish - start) / CLOCKS_PER_SEC;
-    cout << "Time: " << duration << endl << endl;
+	        cout << "Graphs are not isomorphic - ribs are not equal" << endl << endl;
+	        return 0;
+	    }
+
+	    int Connection1 = graph1.CompCon(), Connection2 = graph2.CompCon(); //Проверка компонент связности.
+	    if (Connection1 != Connection2) 										
+	    {
+	         cout << "Graphs are not isomorphic - connection components are not equal" << endl << endl;
+	         return 0;
+	    }
+	    else if (Connection1 == 1)
+	    {
+	    	if (graph1.diamGraph() != graph2.diamGraph()) //Проверка Диаметра графов.
+	    	{
+	        	cout << "Graphs are not isomorphic - diametres are not equal" << endl;
+	        	return 0;
+	    	}
+	    }
+
+	    if (graph1.bipartitle() != graph2.bipartitle()) //Проверка на двудольность.
+	    {
+	        cout << "Graphs are not isomorphic - bipartitle is not equal" << endl;
+	        return 0;
+	    }
+
+
+	    if (graph1.G > 0 && graph2.G > 0)
+	    {
+	        if (graph1.ShortestCircle() != graph2.ShortestCircle())
+	        {
+	            cout << "Graphs are not isomorphic - shortest circles are not equal" << endl;
+	            return 0;
+	        }
+	    }
+
+	    if (perm(&graph1, &graph2))                                        //Перебор всех вариантов матриц смежности.
+	    {
+	        cout << "Graphs are isomorphic" << endl;
+	    }
+	    else
+	        cout << "Graphs are not isomorphic" << endl;
+
+
+
+	    finish = clock();
+	    duration = (float)(finish - start) / CLOCKS_PER_SEC;
+	    cout << "Time: " << duration << endl << endl;
+	}
     return 0;
 }

@@ -1,11 +1,20 @@
 #include "graph.h"
+#include <string>
+using namespace std;
 //Вот
-Graph::Graph(string string1)
+Graph::Graph()
 {
-    ifstream f(string1);
+    
+}
+void Graph::init(string str)
+{
+	ifstream f(str);
     if (f.is_open())
-        cout << "File " << string1 << " is open!" << endl;
-    f >> v >> v;
+        cout << "File " << str << " is open!" << endl;
+    f >> v;
+    for (int i = 0; i < v; ++i)
+		for (int j = 0 ; j < v; ++j)
+			M[i][j] = 0;
     ribs = 0;
     for (int i = 0; i < v; ++i)
     {
