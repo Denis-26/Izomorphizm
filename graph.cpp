@@ -9,8 +9,6 @@ Graph::Graph()
 void Graph::init(string str)
 {
 	ifstream f(str);
-    if (f.is_open())
-        cout << "File " << str << " is open!" << endl;
     f >> v;
     for (int i = 0; i < v; ++i)
 		for (int j = 0 ; j < v; ++j)
@@ -171,7 +169,6 @@ int Graph::ShortestCircle()
         if (count1-1 < min1 && (count1 -1) != -1)
             min1 = count1-1;
     }
-    cout << min1 << endl;
     return min1;
 }
 int Graph::Deikstra(int start)
@@ -216,6 +213,5 @@ int Graph::Deikstra(int start)
 int Graph::diamGraph()
 { 
     int result = distance1[Deikstra(Deikstra(0))];
-    cout << "Diam of Graph = " << result << endl;
     return result;
 }

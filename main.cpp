@@ -60,10 +60,8 @@ int perm(Graph *graph1, Graph *graph2)     //Генерация всех пер�
         if (idx[i] < i)
         {
             if (Equal(graph1, graph2))
-            {
-                cout << "Number of permutations " << N << endl;
                 return 1;
-            }
+            
             int swap1 = i % 2 * idx[i];
             Swap(swap1, i, graph1);
             //print(graph1);
@@ -80,20 +78,19 @@ int perm(Graph *graph1, Graph *graph2)     //Генерация всех пер�
 
 int main()                                //ГЛАВНАЯ ФУНКЦИЯ. 
 {
-	string tests[100] = {"1","11","2","22","3","33","4","44","5","55","6","66","7","77"};
+	string tests[16] = {"1","11","2","22","3","33","4","44","5","55","6","66","7","77"};
 	Graph graph1;
 	Graph graph2;    
 
-    for (int i = 1; i<7; i+=2)
+    for (int j = 1; j<14; j+=2)
     {
 
     	float duration;
     	clock_t start, finish;
     	start = clock();
-	    string s1 = tests[i]+".in";
-	    string s2 = tests[i-1]+".in";
-		cout << s1 << endl;
-		cout << s2 << endl;
+
+	    string s1 = tests[j]+".in";
+	    string s2 = tests[j-1]+".in";
 	    
 	    graph1.init(s1);
 	    graph2.init(s2);
@@ -103,45 +100,60 @@ int main()                                //ГЛАВНАЯ ФУНКЦИЯ.
 	    for (int i = 0; i < graph1.v; ++i)
 	        if (graph1.pasport[i] != graph2.pasport[i])
 	        {
-	            cout << "Graphs are not isomorphic - PASPORTS are not equal" << endl;
+	            cout << "Test: " << tests[j-1] << " NO: ";
 	            finish = clock();
-	            duration = (float)(finish - start) / CLOCKS_PER_SEC;
-	            cout << "Time: " << duration << endl << endl;
-	            return 0;
+		    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
+		    	cout << "Time: " << duration << endl;
+	            break;
 	        }
 	    if (graph1.v != graph2.v)             //Проверка кол-во вершин.
 	    {
-	        cout << "Graphs are not isomorphic - tops are not equal" << endl;
-	        return 0;
+	        cout << "Test: " << tests[j-1] << " NO: ";
+	        finish = clock();
+	    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
+	    	cout << "Time: " << duration << endl;
+	        continue;
 	    }
 
 
 	    if (graph1.ribs != graph2.ribs)         //Проверка кол-во ребер.
 	    {
 
-	        cout << "Graphs are not isomorphic - ribs are not equal" << endl << endl;
-	        return 0;
+	        cout << "Test: " << tests[j-1] << " NO: ";
+	        finish = clock();
+	    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
+	    	cout << "Time: " << duration << endl;
+	        continue;
 	    }
 
 	    int Connection1 = graph1.CompCon(), Connection2 = graph2.CompCon(); //Проверка компонент связности.
 	    if (Connection1 != Connection2) 										
 	    {
-	         cout << "Graphs are not isomorphic - connection components are not equal" << endl << endl;
-	         return 0;
+	         cout << "Test: " << tests[j-1] << " NO: ";
+	         finish = clock();
+	    	 duration = (float)(finish - start) / CLOCKS_PER_SEC;
+	    	 cout << "Time: " << duration << endl;
+	         continue;
 	    }
 	    else if (Connection1 == 1)
 	    {
 	    	if (graph1.diamGraph() != graph2.diamGraph()) //Проверка Диаметра графов.
 	    	{
-	        	cout << "Graphs are not isomorphic - diametres are not equal" << endl;
-	        	return 0;
+	        	cout << "Test: " << tests[j-1] << " NO: ";
+	        	finish = clock();
+		    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
+		    	cout << "Time: " << duration << endl;
+	        	continue;
 	    	}
 	    }
 
 	    if (graph1.bipartitle() != graph2.bipartitle()) //Проверка на двудольность.
 	    {
-	        cout << "Graphs are not isomorphic - bipartitle is not equal" << endl;
-	        return 0;
+	        cout << "Test: " << tests[j-1] << " NO: ";
+	        finish = clock();
+	    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
+	    	cout << "Time: " << duration << endl;
+	        continue;
 	    }
 
 
@@ -149,23 +161,28 @@ int main()                                //ГЛАВНАЯ ФУНКЦИЯ.
 	    {
 	        if (graph1.ShortestCircle() != graph2.ShortestCircle())
 	        {
-	            cout << "Graphs are not isomorphic - shortest circles are not equal" << endl;
-	            return 0;
+	            cout << "Test: " << tests[j-1] << " NO: ";
+	            finish = clock();
+		    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
+		    	cout << "Time: " << duration << endl;
+	            continue;
 	        }
 	    }
 
 	    if (perm(&graph1, &graph2))                                        //Перебор всех вариантов матриц смежности.
 	    {
-	        cout << "Graphs are isomorphic" << endl;
+	        cout << "Test: " << tests[j-1] << " YES: ";
+	    	finish = clock();
+	    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
+	    	cout << "Time: " << duration << endl;
 	    }
 	    else
-	        cout << "Graphs are not isomorphic" << endl;
-
-
-
-	    finish = clock();
-	    duration = (float)(finish - start) / CLOCKS_PER_SEC;
-	    cout << "Time: " << duration << endl << endl;
+       	{
+       		cout << "Test: " << tests[j-1] << " NO: ";
+	    	finish = clock();
+	    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
+	    	cout << "Time: " << duration << endl;
+       	}
 	}
     return 0;
 }
