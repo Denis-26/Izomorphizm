@@ -5,7 +5,7 @@
 using namespace std;
 int N = 0; 
 
-
+int EqualPasports(int *pasport1, int *pasport2);
 void Swap(int k, int j, Graph *matrix);
 bool Equal(Graph *graph1, Graph *graph2);
 void print(Graph *graph1);
@@ -28,7 +28,13 @@ void Swap(int k, int j, Graph *matrix)       //Функция замены ст�
     }
     N++;
 }
-
+int EqualPasports(int v, int *pasport1, int *pasport2)
+{
+	for (int i = 0; i < v; ++i)
+        if (pasport1[i] != pasport2[i])
+            return 0;
+    return 1;
+}
 bool Equal(Graph *graph1, Graph *graph2)        //Проверка матриц Графов на схожесть
 {
     for (int i = 0; i < graph1->v; ++i)
@@ -85,81 +91,72 @@ int main()                                //ГЛАВНАЯ ФУНКЦИЯ.
     for (int j = 1; j<14; j+=2)
     {
 
+		string s1 = tests[j]+".in";
+	    string s2 = tests[j-1]+".in";
+		
+		graph1.init(s1);
+	    graph2.init(s2);
+    	
     	float duration;
     	clock_t start, finish;
     	start = clock();
 
-	    string s1 = tests[j]+".in";
-	    string s2 = tests[j-1]+".in";
-	    
-	    graph1.init(s1);
-	    graph2.init(s2);
+	    if (graph2.v > 10)
+    	{
 
-	    graph1.Pasport();                       //Проверка паспортов графа.
-	    graph2.Pasport();
-	    for (int i = 0; i < graph1.v; ++i)
-	        if (graph1.pasport[i] != graph2.pasport[i])
-	        {
-	            cout << "Test: " << tests[j-1] << " NO: ";
-	            finish = clock();
+    		if (graph1.ribs != graph2.ribs)         //Проверка кол-во ребер.
+		    {
+
+		        cout << "Test: " << tests[j-1] << " NO: ";
+		        finish = clock();
 		    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
 		    	cout << "Time: " << duration << endl;
-	            break;
-	        }
-	    if (graph1.v != graph2.v)             //Проверка кол-во вершин.
-	    {
-	        cout << "Test: " << tests[j-1] << " NO: ";
-	        finish = clock();
-	    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
-	    	cout << "Time: " << duration << endl;
-	        continue;
-	    }
+		        continue;
+		    }
 
-
-	    if (graph1.ribs != graph2.ribs)         //Проверка кол-во ребер.
-	    {
-
-	        cout << "Test: " << tests[j-1] << " NO: ";
-	        finish = clock();
-	    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
-	    	cout << "Time: " << duration << endl;
-	        continue;
-	    }
-
-	    int Connection1 = graph1.CompCon(), Connection2 = graph2.CompCon(); //Проверка компонент связности.
-	    if (Connection1 != Connection2) 										
-	    {
-	         cout << "Test: " << tests[j-1] << " NO: ";
-	         finish = clock();
-	    	 duration = (float)(finish - start) / CLOCKS_PER_SEC;
-	    	 cout << "Time: " << duration << endl;
-	         continue;
-	    }
-	    else if (Connection1 == 1)
-	    {
-	    	if (graph1.diamGraph() != graph2.diamGraph()) //Проверка Диаметра графов.
+			graph1.Pasport();                       //Проверка паспортов графа.
+		    graph2.Pasport();
+		    if (!EqualPasports(graph1.v, graph1.pasport, graph2.pasport))
 	    	{
-	        	cout << "Test: " << tests[j-1] << " NO: ";
-	        	finish = clock();
+	    		cout << "Test: " << tests[j-1] << " NO: ";
+		        finish = clock();
 		    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
 		    	cout << "Time: " << duration << endl;
-	        	continue;
+		    	continue;
 	    	}
-	    }
+		    
+		    int Connection1 = graph1.CompCon(), Connection2 = graph2.CompCon(); //Проверка компонент связности.
+		    if (Connection1 != Connection2) 										
+		    {
+		         cout << "Test: " << tests[j-1] << " NO: ";
+		         finish = clock();
+		    	 duration = (float)(finish - start) / CLOCKS_PER_SEC;
+		    	 cout << "Time: " << duration << endl;
+		         continue;
+		    }
+		    else if (Connection1 == 1)
+		    {
+		    	if (graph1.diamGraph() != graph2.diamGraph()) //Проверка Диаметра графов.
+		    	{
+		        	cout << "Test: " << tests[j-1] << " NO: ";
+		        	finish = clock();
+			    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
+			    	cout << "Time: " << duration << endl;
+		        	continue;
+		    	}
+		    }
 
-	    if (graph1.bipartitle() != graph2.bipartitle()) //Проверка на двудольность.
-	    {
-	        cout << "Test: " << tests[j-1] << " NO: ";
-	        finish = clock();
-	    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
-	    	cout << "Time: " << duration << endl;
-	        continue;
-	    }
-
-
-	    if (graph1.G > 0 && graph2.G > 0)
-	    {
-	        if (graph1.ShortestCircle() != graph2.ShortestCircle())
+		    if (graph1.bipartitle() != graph2.bipartitle()) //Проверка на двудольность.
+		    {
+		        cout << "Test: " << tests[j-1] << " NO: ";
+		        finish = clock();
+		    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
+		    	cout << "Time: " << duration << endl;
+		        continue;
+		    }
+		    
+		    bool qwerty = (graph1.G > 0 && graph2.G > 0);
+	        if (qwerty && (graph1.ShortestCircle() != graph2.ShortestCircle()))
 	        {
 	            cout << "Test: " << tests[j-1] << " NO: ";
 	            finish = clock();
@@ -167,9 +164,8 @@ int main()                                //ГЛАВНАЯ ФУНКЦИЯ.
 		    	cout << "Time: " << duration << endl;
 	            continue;
 	        }
-	    }
-
-	    if (perm(&graph1, &graph2))                                        //Перебор всех вариантов матриц смежности.
+    	}
+    	if (perm(&graph1, &graph2))                                        //Перебор всех вариантов матриц смежности.
 	    {
 	        cout << "Test: " << tests[j-1] << " YES: ";
 	    	finish = clock();

@@ -31,6 +31,7 @@ public:              //Функции
     int diamGraph();
     int Deikstra(int start);
     void init(string str);
+    
 };
 
 #endif
