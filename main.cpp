@@ -70,14 +70,11 @@ int perm(Graph *graph1, Graph *graph2)     //Генерация всех пер�
             
             int swap1 = i % 2 * idx[i];
             Swap(swap1, i, graph1);
-            //print(graph1);
             idx[i]++;
             i = 1;
         }
         else
-        {
           idx[i++] = 0;
-        }
     }
     return 0;
 }

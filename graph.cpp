@@ -97,18 +97,15 @@ bool Graph::bipartitle()
             q.pop();
             for (int i = 0; i < v; ++i)
             {
-                if (M[indx][i])
+                if (M[indx][i] && color1[i] == 0)
                 {
-                    if (color1[i] == 0)
-                    {
-                        if (color1[indx] == 1)
-                            color1[i] = 2;
-                        else if (color1[indx] == 2)
-                            color1[i] = 1;
-                    }
-                    else if (color1[i] == color1[indx])
-                    	return 0;
+                    if (color1[indx] == 1)
+                        color1[i] = 2;
+                    else if (color1[indx] == 2)
+                        color1[i] = 1;
                 }
+                else if (color1[i] == color1[indx])
+                	return 0;
             }
         }
         k++;
