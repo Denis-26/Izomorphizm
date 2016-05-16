@@ -1,7 +1,5 @@
 #include "graph.h"
-#include <string>
 using namespace std;
-//Вот
 Graph::Graph()
 {
     
@@ -10,41 +8,30 @@ void Graph::init(string str)
 {
 	ifstream f(str);
     f >> v;
-    for (int i = 0; i < v; ++i)
-		for (int j = 0 ; j < v; ++j)
-			M[i][j] = 0;
     ribs = 0;
     for (int i = 0; i < v; ++i)
     {
+        pasport[i] = 0;
+        color1[i] = 0;
         for (int j = 0 ; j < v; ++j)
         {
             f >> M[i][j];
-            if (M[i][j] == 1)
+            if (M[i][j])
+            {
                 ribs++;
+                pasport[i]++;
+            }
         }
     }
-    ribs/=2;
-    G = ribs - v + 1;
-    for (int i = 0; i < v; ++i)
-        pasport[i] = 0;
-    for (int i = 0 ; i < v; ++i)
-        color1[i] = 0;
-}
-void Graph::Pasport()
-{
-    for (int i = 0; i < v; ++i)
-    {
-        for (int j = 0; j < v; ++j)
-            if (this->M[i][j])
-                pasport[i]++;
-    }
     sort(pasport, pasport+v);
+    ribs/=2;
+    G = ribs - v + 1;    
 }
 
 int Graph::CompCon()
 {
 	//Тут
-    vector<bool> used(v, false);
+    bool used[C] = {false};
     bool con_discon = true;
     int indx, count1 = 1;
     for (int j = 0; j < v; ++j)
@@ -60,22 +47,18 @@ int Graph::CompCon()
             used[indx] = true;
             con_discon = true;
             for (int i = 0; i < v; ++i)
-            {
-                if (this->M[indx][i])
+                if (M[indx][i])
                     q.push(i);
-            }
         }
         if (con_discon)
         {
             for (int i = 0; i < v; ++i)
-            {
             	if (!used[i])
                 {
                     con_discon = false;;
                     count1++;
                     break;
                 }
-            }
         }
     }
     return count1;
@@ -85,11 +68,10 @@ bool Graph::bipartitle()
     queue<int> q;
     int indx;
     int k = 0;
-
     while(k != (v-1))
     {
         q.push(k);
-        if (color1[k] == 0)
+        if (!color1[k])
             color1[k] = 1;
         while(!q.empty())
         {
@@ -97,7 +79,7 @@ bool Graph::bipartitle()
             q.pop();
             for (int i = 0; i < v; ++i)
             {
-                if (M[indx][i] && color1[i] == 0)
+                if (M[indx][i] && !color1[i])
                 {
                     if (color1[indx] == 1)
                         color1[i] = 2;
@@ -117,16 +99,12 @@ int Graph::ShortestCircle()
 {
     queue<int> q;
     int indx, a1 = -1, b1 = -1, count1 = 0, min1 = 10000000, V[30];
-    bool used[30];
+    bool used[30] = {false};
     for (int k = 0; k < v; ++k)
     {
         for (int j = 0; j < v; ++j)
-        {
             V[j] = -1;
-            used[j] = false;
-        }
         count1 = 0;
-
         q.push(k);
         while(!q.empty())
         {
@@ -171,12 +149,9 @@ int Graph::ShortestCircle()
 int Graph::Deikstra(int start)
 {
     int indx;
-    bool used[C];
+    bool used[C] = {false};
     for (int i = 0; i < v; ++i)
-    {
-        used[i] = false;
         distance1[i] = 10000000;
-    }
     queue<int> q;
     q.push(start);
     distance1[start] = 0;
@@ -200,11 +175,11 @@ int Graph::Deikstra(int start)
     int max1 = 0;
     int vers = 0;
     for (int i = 0; i < v; ++i)
-        if (distance1[i] > max1)
-        {
-            max1 = distance1[i];
-            vers = i;   
-        }
+    {
+        bool qwerty = distance1[i] > max1;
+        max1 = distance1[i]*qwerty;
+        vers = i*qwerty;   
+    }
     return vers;
 }
 int Graph::diamGraph()

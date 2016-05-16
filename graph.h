@@ -2,9 +2,7 @@
 #define GRAPH_H
 #include <fstream>
 #include <iostream>
-#include <string.h>
 #include <queue>
-#include <vector>
 #include <algorithm>
 #define C 20
 using namespace std;
@@ -26,7 +24,6 @@ public:              //Функции
     int CompCon();
     bool bipartitle();
     Graph();
-    void Pasport();
     int ShortestCircle();
     int diamGraph();
     int Deikstra(int start);
