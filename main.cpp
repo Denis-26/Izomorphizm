@@ -19,7 +19,6 @@ void Swap(int k, int j, Graph *matrix)       //Функция замены ст�
         matrix->M[k][i] = matrix->M[j][i];
         matrix->M[j][i] = swap;
     }
-
     for (int i = 0; i < matrix->v; ++i)
     {
         int swap = matrix->M[i][k];
