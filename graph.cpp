@@ -23,7 +23,7 @@ void Graph::init(string str)
             }
         }
     }
-    sort(pasport, pasport+v);
+    
     ribs/=2;
     G = ribs - v + 1;    
 }
