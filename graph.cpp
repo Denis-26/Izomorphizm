@@ -1,9 +1,4 @@
 #include "graph.h"
-using namespace std;
-Graph::Graph()
-{
-    
-}
 void Graph::init(string str)
 {
 	ifstream f(str);
@@ -23,7 +18,6 @@ void Graph::init(string str)
             }
         }
     }
-    
     ribs/=2;
     G = ribs - v + 1;    
 }
@@ -32,12 +26,16 @@ int Graph::CompCon()
 {
 	//Тут
     bool used[C] = {false};
-    bool con_discon = true;
+    int con_discon[C] = {0};
     int indx, count1 = 1;
     for (int j = 0; j < v; ++j)
     {
         queue<int> q;
         q.push(j);
+        if (con_discon[j])
+        	continue;
+        else
+        	count1++;
         while (!q.empty())
         {
             indx = q.front();
@@ -45,12 +43,15 @@ int Graph::CompCon()
             if (used[indx])
                 continue;
             used[indx] = true;
-            con_discon = true;
+            //con_discon = true;
             for (int i = 0; i < v; ++i)
                 if (M[indx][i])
-                    q.push(i);
+                {
+            	    q.push(i);
+            	    con_discon[i] = 1;
+                }
         }
-        if (con_discon)
+        /*if (con_discon)
         {
             for (int i = 0; i < v; ++i)
             	if (!used[i])
@@ -59,8 +60,9 @@ int Graph::CompCon()
                     count1++;
                     break;
                 }
-        }
+        }*/
     }
+    cout << count1 << endl;
     return count1;
 }
 bool Graph::bipartitle()

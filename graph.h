@@ -23,7 +23,6 @@ public:              //Функции
 
     int CompCon();
     bool bipartitle();
-    Graph();
     int ShortestCircle();
     int diamGraph();
     int Deikstra(int start);

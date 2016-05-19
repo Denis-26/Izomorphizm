@@ -2,22 +2,21 @@
 #include <ctime>
 #include "graph.h"
 #include <algorithm>
-using namespace std;
-
+#include <fstream>
 int EqualPasports(int *pasport1, int *pasport2);
 void Swap(int k, int j, Graph *matrix);
 bool Equal(Graph *graph1, Graph *graph2);
 int perm(Graph *graph1, Graph *graph2);
-
+const int A11 = 12;
 void Swap(int k, int j, Graph *matrix)       //Функция замены строк и столбцов.
 {
-    for (int i = 0; i < matrix->v; ++i)
+    for (int i = 0; i < A11; ++i)
     {
         int swap = matrix->M[k][i];
         matrix->M[k][i] = matrix->M[j][i];
         matrix->M[j][i] = swap;
     }
-    for (int i = 0; i < matrix->v; ++i)
+    for (int i = 0; i < A11; ++i)
     {
         int swap = matrix->M[i][k];
         matrix->M[i][k] = matrix->M[i][j];
@@ -82,24 +81,23 @@ int main()                                //ГЛАВНАЯ ФУНКЦИЯ.
 	    if ((graph2.v > 10) && ((graph1.ribs != graph2.ribs) || (!EqualPasports(graph1.v, graph1.pasport, graph2.pasport)) || (graph1.bipartitle() != graph2.bipartitle()) || ((graph1.G > 0 && graph2.G > 0) && (graph1.ShortestCircle() != graph2.ShortestCircle())) || (graph1.CompCon() != graph2.CompCon()) || (graph1.diamGraph() != graph2.diamGraph())))
     	{
 			finish = clock();
-	        cout << "Test: " << tests[j-1] << " NO: ";
+	        std::cout << "Test: " << tests[j-1] << " NO: ";
 	    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
-	    	cout << "Time: " << duration << endl;
+	    	std::cout << "Time: " << duration << std::endl;
 	        continue;
     	}
     	if (perm(&graph1, &graph2))                                        //Перебор всех вариантов матриц смежности.
 	    {
 	    	finish = clock();
-	        cout << "Test: " << tests[j-1] << " YES: ";
+	        std::cout << "Test: " << tests[j-1] << " YES: ";
 	    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
-	    	cout << "Time: " << duration << endl;
+	    	std::cout << "Time: " << duration << std::endl;
 	    	continue;
 	    }
 	    finish = clock();
-		cout << "Test: " << tests[j-1] << " NO: ";
+		std::cout << "Test: " << tests[j-1] << " NO: ";
     	duration = (float)(finish - start) / CLOCKS_PER_SEC;
-    	cout << "Time: " << duration << endl;
-   		
+    	std::cout << "Time: " << duration << std::endl;
 	}
     return 0;
 }
