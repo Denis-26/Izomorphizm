@@ -25,7 +25,7 @@ public:              //Функции
     bool bipartitle();
     int ShortestCircle();
     int diamGraph();
-    int Deikstra(int start);
+    void Deikstra(int start);
     void init(string str);
     
 };

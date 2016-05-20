@@ -24,7 +24,6 @@ void Graph::init(string str)
 
 int Graph::CompCon()
 {
-	//Тут
     bool used[C] = {false};
     int con_discon[C] = {0};
     int indx, count1 = 1;
@@ -43,7 +42,6 @@ int Graph::CompCon()
             if (used[indx])
                 continue;
             used[indx] = true;
-            //con_discon = true;
             for (int i = 0; i < v; ++i)
                 if (M[indx][i])
                 {
@@ -51,18 +49,8 @@ int Graph::CompCon()
             	    con_discon[i] = 1;
                 }
         }
-        /*if (con_discon)
-        {
-            for (int i = 0; i < v; ++i)
-            	if (!used[i])
-                {
-                    con_discon = false;;
-                    count1++;
-                    break;
-                }
-        }*/
     }
-    cout << count1 << endl;
+    //cout << "ComCon " << count1 << endl;
     return count1;
 }
 bool Graph::bipartitle()
@@ -89,11 +77,15 @@ bool Graph::bipartitle()
                         color1[i] = 1;
                 }
                 else if (color1[i] == color1[indx])
-                	return 0;
+                {
+    				//cout << "Bipart - 0" << endl;
+    				return 0;	
+                }
             }
         }
         k++;
     }
+    //cout << "Bipart - 1" << endl;
     return 1;
 }
 
@@ -130,7 +122,6 @@ int Graph::ShortestCircle()
                         q.push(i);
                     }
                 }
-
             }
         }
         while(a1!=-1)
@@ -146,14 +137,15 @@ int Graph::ShortestCircle()
         if (count1-1 < min1 && (count1 -1) != -1)
             min1 = count1-1;
     }
+    //cout << "Circle " << min1 << " ";
     return min1;
 }
-int Graph::Deikstra(int start)
+void Graph::Deikstra(int start) //переписать полностью 
 {
     int indx;
     bool used[C] = {false};
     for (int i = 0; i < v; ++i)
-        distance1[i] = 10000000;
+        distance1[i] = 1000000000;
     queue<int> q;
     q.push(start);
     distance1[start] = 0;
@@ -162,30 +154,29 @@ int Graph::Deikstra(int start)
         indx = q.front();
         q.pop();
         if (used[indx])
-            continue;
+       		continue;
         used[indx] = true;
         for (int i = 0; i < v; ++i)
         {
-            if (M[indx][i])
+            if (M[indx][i] && !used[i])
             {
-                if (M[indx][i]+distance1[indx] < distance1[i])
-                    distance1[i] = distance1[indx] + M[indx][i];
-                q.push(i);
+            	if (distance1[indx]+1 < distance1[i])
+        			distance1[i] = distance1[indx]+1;
+        		q.push(i);
             }
         }
     }
-    int max1 = 0;
-    int vers = 0;
-    for (int i = 0; i < v; ++i)
-    {
-        bool qwerty = distance1[i] > max1;
-        max1 = distance1[i]*qwerty;
-        vers = i*qwerty;   
-    }
-    return vers;
 }
 int Graph::diamGraph()
 { 
-    int result = distance1[Deikstra(Deikstra(0))];
-    return result;
+	int max1 = 0;
+	for (int k = 0; k < v; ++k)
+	{
+		Deikstra(k);
+		for (int j = 0; j < v; ++j)
+			if (distance1[j] > max1)
+				max1 = distance1[j];
+	}
+	cout << max1 << " ";
+	return max1;
 }

@@ -7,7 +7,7 @@ int EqualPasports(int *pasport1, int *pasport2);
 void Swap(int k, int j, Graph *matrix);
 bool Equal(Graph *graph1, Graph *graph2);
 int perm(Graph *graph1, Graph *graph2);
-const int A11 = 12;
+const int A11 = 13;
 void Swap(int k, int j, Graph *matrix)       //Функция замены строк и столбцов.
 {
     for (int i = 0; i < A11; ++i)
@@ -59,13 +59,13 @@ int perm(Graph *graph1, Graph *graph2)     //Генерация всех пер�
     return 0;
 }
 
-int main()                                //ГЛАВНАЯ ФУНКЦИЯ. 
+int main()  
 {
-	string tests[16] = {"1","11","2","22","3","33","4","44","5","55","6","66","7","77"};
+	string tests[28] = {"0","00","1","01","2","02","10","010","11","011","12","012","13","013", "14","014", "15", "015", "16", "016", "17", "017","18","018","19","019","20","020"};
+	//string tests[14] = {"1","01","2","02","3","03","4","04","5","05","6","06","7","07"};
 	Graph graph1;
 	Graph graph2;    
-
-    for (int j = 1; j<14; j+=2)
+    for (int j = 1; j<28; j+=2)
     {
 
 		string s1 = tests[j]+".in";
@@ -83,7 +83,16 @@ int main()                                //ГЛАВНАЯ ФУНКЦИЯ.
 			finish = clock();
 	        std::cout << "Test: " << tests[j-1] << " NO: ";
 	    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
-	    	std::cout << "Time: " << duration << std::endl;
+	    	std::cout << "Time: " << duration << " ";
+
+	    	fstream f(tests[j-1]+".out");
+	    	string str;
+	    	f >> str;
+	    	if (!str.compare("NO"))
+	    		cout << "CORRECT\n";
+	    	else
+	    		cout << "UNCORRECT\n";
+
 	        continue;
     	}
     	if (perm(&graph1, &graph2))                                        //Перебор всех вариантов матриц смежности.
@@ -91,13 +100,34 @@ int main()                                //ГЛАВНАЯ ФУНКЦИЯ.
 	    	finish = clock();
 	        std::cout << "Test: " << tests[j-1] << " YES: ";
 	    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
-	    	std::cout << "Time: " << duration << std::endl;
+	    	std::cout << "Time: " << duration << " ";
+
+	    	fstream f(tests[j-1]+".out");
+	    	string str;
+	    	f >> str;
+	    	if (!str.compare("YES"))
+	    		cout << "CORRECT\n";
+	    	else
+	    		cout << "UNCORRECT\n";
+
 	    	continue;
 	    }
-	    finish = clock();
-		std::cout << "Test: " << tests[j-1] << " NO: ";
-    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
-    	std::cout << "Time: " << duration << std::endl;
+	    else
+	    {
+	    	finish = clock();
+			std::cout << "Test: " << tests[j-1] << " NO: ";
+	    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
+	    	std::cout << "Time: " << duration << " ";
+
+	    	fstream f(tests[j-1]+".out");
+	    	string str;
+	    	f >> str;
+	    	if (!str.compare("NO"))
+	    		cout << "CORRECT\n";
+	    	else
+	    		cout << "UNCORRECT\n";
+
+	    }
 	}
     return 0;
 }
