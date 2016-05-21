@@ -43,7 +43,9 @@ bool Equal(Graph *graph1, Graph *graph2)        //Проверка матриц 
 }
 int perm(Graph *graph1, Graph *graph2)     //Генерация всех перестановок
 {
-    int idx[graph1->v] = {0};
+    int* idx = new int[graph1->v];
+    for(int i=0;i<graph1->v;i++)
+        idx[i]=0;
     for (int i=1; i < graph1->v;)
     {
         if (idx[i] < i)
@@ -63,74 +65,42 @@ int perm(Graph *graph1, Graph *graph2)     //Генерация всех пер�
 int main()  
 {
 	double TIME = 0;
-	
-	string tests[28] = {"0","00","1","01","2","02","10","010","11","011","12","012","13","013", "14","014", "15", "015", "16", "016", "17", "017","18","018","19","019","20","020"};
-	//string tests[14] = {"1","01","2","02","3","03","4","04","5","05","6","06","7","07"};
 	Graph graph1;
 	Graph graph2;    
-    for (int j = 1; j<28; j+=2)
-    {
-    	
-		string s1 = tests[j]+".in";
-	    string s2 = tests[j-1]+".in";
-		
-		double duration;
-    	clock_t start, finish;
-    	start = clock();
 
-		graph1.init(s1);
-	    graph2.init(s2);
-    	
-	    if ((graph2.v > 10) && ((graph1.ribs != graph2.ribs) || (!EqualPasports(graph1.v, graph1.pasport, graph2.pasport)) || (graph1.bipartitle() != graph2.bipartitle()) || ((graph1.G > 0 && graph2.G > 0) && (graph1.ShortestCircle() != graph2.ShortestCircle())) || (graph1.CompCon() != graph2.CompCon()) || (graph1.diamGraph() != graph2.diamGraph())))
-    	{
-			finish = clock();
-			duration = (float)(finish - start) / CLOCKS_PER_SEC;
-			TIME+=duration;
+	double duration;
+	clock_t start, finish;
+	start = clock();
 
-			fstream f(tests[j-1]+".out");
-	    	string str;
-	    	f >> str;
+	graph1.init();
+    graph2.init(graph1.v);
+	
+    if ((graph2.v > 10) && ((graph1.ribs != graph2.ribs) || (!EqualPasports(graph1.v, graph1.pasport, graph2.pasport)) || (graph1.bipartitle() != graph2.bipartitle()) || ((graph1.G > 0 && graph2.G > 0) && (graph1.ShortestCircle() != graph2.ShortestCircle())) || (graph1.CompCon() != graph2.CompCon()) || (graph1.diamGraph() != graph2.diamGraph())))
+	{
+		finish = clock();
+		duration = (float)(finish - start) / CLOCKS_PER_SEC;
+		TIME+=duration;
 
-	    	if (!str.compare("NO"))
-	    		cout << "Test(" << tests[j-1]<<") " << "NO: " << "Time[" << fixed << setprecision(6) << duration << "] -> " << "CORRECT\n";
-	    	else
-	    		cout << "Test(" << tests[j-1]<<") " << "NO: " << "Time[" << fixed << setprecision(6)<<duration << "] -> " << "UNCORRECT\n";
-	        continue;
-    	}
-    	if (perm(&graph1, &graph2))                                        //Перебор всех вариантов матриц смежности.
-	    {
-	    	finish = clock();
-			duration = (float)(finish - start) / CLOCKS_PER_SEC;
-			TIME+=duration;
-
-			fstream f(tests[j-1]+".out");
-	    	string str;
-	    	f >> str;
-
-	    	if (!str.compare("YES"))
-	    		cout << "Test(" << tests[j-1]<<") " << "YES: " << "Time[" << fixed << setprecision(6)<<duration << "] -> " << "CORRECT\n";
-	    	else
-	    		cout << "Test(" << tests[j-1]<<") " << "YES: " << "Time[" << duration << "] -> " << "UNCORRECT\n";
-
-	    	continue;
-	    }
-	    else
-	    {
-	    	finish = clock();
-			duration = (float)(finish - start) / CLOCKS_PER_SEC;
-			TIME+=duration;
-
-			fstream f(tests[j-1]+".out");
-	    	string str;
-	    	f >> str;
-
-	    	if (!str.compare("NO"))
-	    		cout << "Test(" << tests[j-1]<<") " << "NO: " << "Time[" << fixed << setprecision(6) << duration << "] -> " << "CORRECT\n";
-	    	else
-	    		cout << "Test(" << tests[j-1]<<") " << "NO: " << "Time[" << fixed << setprecision(6) << duration << "] -> " << "UNCORRECT\n";
-
-	    }
+        cout << setprecision(6) << duration << endl;
+        cout << "NO\n";
 	}
-	cout << "Time for all tests: " << TIME << "\n";  
+	if (perm(&graph1, &graph2))                                        //Перебор всех вариантов матриц смежности.
+    {
+    	finish = clock();
+		duration = (float)(finish - start) / CLOCKS_PER_SEC;
+		TIME+=duration;
+
+        cout << setprecision(6) << duration << endl;
+        cout << "YES\n";
+    }
+    else
+    {
+    	finish = clock();
+		duration = (float)(finish - start) / CLOCKS_PER_SEC;
+		TIME+=duration;
+
+		cout << setprecision(6) << duration << endl;
+        cout << "NO\n";
+    }
     return 0;
 }

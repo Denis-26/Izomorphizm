@@ -26,8 +26,8 @@ public:              //Функции
     int ShortestCircle();
     int diamGraph();
     void Deikstra(int start);
-    void init(string str);
-    
+    void init();
+    void init(int n);
 };
 
 #endif
