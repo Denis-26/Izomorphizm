@@ -1,4 +1,5 @@
 #include "graph.h"
+#include <cstring>
 void Graph::init()
 {
     cin >> v;
@@ -8,6 +9,7 @@ void Graph::init(int n)
 {
     v = n;
     ribs = 0;
+    memset(M, 0, sizeof(M));
     for (int i = 0; i < v; ++i)
     {
         pasport[i] = 0;
@@ -28,29 +30,26 @@ void Graph::init(int n)
 
 int Graph::CompCon()
 {
-    bool used[C] = {false};
-    int con_discon[C] = {0};
+    bool used[C] = {};
     int indx, count1 = 1;
     for (int j = 0; j < v; ++j)
     {
+        if (used[j])
+            continue;
+        else
+            count1++;
         queue<int> q;
         q.push(j);
-        if (con_discon[j])
-        	continue;
-        else
-        	count1++;
+        used[j] = true;
         while (!q.empty())
         {
             indx = q.front();
             q.pop();
-            if (used[indx])
-                continue;
-            used[indx] = true;
             for (int i = 0; i < v; ++i)
-                if (M[indx][i])
+                if (M[indx][i] && !used[i])
                 {
             	    q.push(i);
-            	    con_discon[i] = 1;
+            	    used[i] = true;
                 }
         }
     }
@@ -61,12 +60,12 @@ bool Graph::bipartitle()
 {
     queue<int> q;
     int indx;
-    int k = 0;
-    while(k != (v-1))
+    for(int k = 0; k < v; ++k)
     {
+        if (color1[k])
+            continue;
+        color1[k] = 1;
         q.push(k);
-        if (!color1[k])
-            color1[k] = 1;
         while(!q.empty())
         {
             indx = q.front();
@@ -74,12 +73,7 @@ bool Graph::bipartitle()
             for (int i = 0; i < v; ++i)
             {
                 if (M[indx][i] && !color1[i])
-                {
-                    if (color1[indx] == 1)
-                        color1[i] = 2;
-                    else if (color1[indx] == 2)
-                        color1[i] = 1;
-                }
+                    color1[i] = 3 - color1[indx];
                 else if (color1[i] == color1[indx])
                 {
     				//cout << "Bipart - 0" << endl;
@@ -87,7 +81,6 @@ bool Graph::bipartitle()
                 }
             }
         }
-        k++;
     }
     //cout << "Bipart - 1" << endl;
     return 1;
@@ -95,54 +88,42 @@ bool Graph::bipartitle()
 
 int Graph::ShortestCircle()
 {
-    queue<int> q;
-    int indx, a1 = -1, b1 = -1, count1 = 0, min1 = 10000000, V[30];
-    
-    for (int k = 0; k < v; ++k)
+    int indx, count1 = 0, min1 = 10000000, V[C];
+    for (int k = 0; k < v-2; ++k)
     {
-        for (int j = 0; j < v; ++j)
-            V[j] = -1;
-        bool used[30] = {false};
-
-
+        memset(V, -1, v*sizeof(int));
+        bool used[C] = {};                                 
         count1 = 0;
+        queue<int> q;
         q.push(k);
+        V[k] = 0;
         while(!q.empty())
         {
             indx = q.front();
             q.pop();
-            if (used[indx])
-                continue;
             used[indx] = true;
-            for(int i = 0; i < v && a1 == -1; ++i)
+            for(int i = 0; i < v; ++i)
             {
                 if (M[indx][i] && !used[i])
                 {
                     if (V[i] != -1)
                     {
-                        a1 = indx;
-                        b1 = i;
+                        count1 = V[i]+V[indx]+1;
+                        if (count1 < min1)
+                            min1 = count1;
+                        if (min1 == 3)
+                            return 3;
+                        goto label;
                     }
                     else
                     {
-                        V[i] = indx;
+                        V[i] = V[indx]+1;
                         q.push(i);
                     }
                 }
             }
         }
-        while(a1!=-1)
-        {
-            a1 = V[a1];
-            count1++;
-        }
-        while (b1!=-1)
-        {
-            b1 = V[b1];
-            count1++;
-        }
-        if (count1-1 < min1 && (count1 -1) != -1)
-            min1 = count1-1;
+label:;
     }
     //cout << "Circle " << min1 << " ";
     return min1;
@@ -150,7 +131,7 @@ int Graph::ShortestCircle()
 void Graph::Deikstra(int start)  
 {
     int indx;
-    bool used[C] = {false};
+    bool used[C] = {};
     for (int i = 0; i < v; ++i)
         distance1[i] = 1000000000;
     queue<int> q;

@@ -4,14 +4,12 @@
 #include <iostream>
 #include <queue>
 #include <algorithm>
-#define C 20
+#define C 16
 using namespace std;
 class Graph
 {
 public:              //Поля
-    int M[C][C];  //Главная матрица.
-
-    int count;
+    bool M[C][C];  //Главная матрица.
     int color1[C];
     int ribs;
     int v;

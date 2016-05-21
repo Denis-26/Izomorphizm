@@ -2,32 +2,64 @@
 #include <ctime>
 #include "graph.h"
 #include <algorithm>
-#include <iomanip>
 #include <fstream>
+#include <cstring>
 int EqualPasports(int *pasport1, int *pasport2);
 void Swap(int k, int j, Graph *matrix);
 bool Equal(Graph *graph1, Graph *graph2);
 int perm(Graph *graph1, Graph *graph2);
 const int A11 = 13;
+bool tmp[C];
 void Swap(int k, int j, Graph *matrix)       //Функция замены строк и столбцов.
 {
-    for (int i = 0; i < A11; ++i)
-    {
-        int swap = matrix->M[k][i];
-        matrix->M[k][i] = matrix->M[j][i];
-        matrix->M[j][i] = swap;
-    }
-    for (int i = 0; i < A11; ++i)
-    {
-        int swap = matrix->M[i][k];
-        matrix->M[i][k] = matrix->M[i][j];
-        matrix->M[i][j] = swap;
-    }
+    memcpy(tmp, matrix->M[k], sizeof(tmp));
+    memcpy(matrix->M[k], matrix->M[j], sizeof(tmp));
+    memcpy(matrix->M[j], tmp, sizeof(tmp));
+    bool swap;
+    swap = matrix->M[0][k];
+    matrix->M[0][k] = matrix->M[0][j];
+    matrix->M[0][j] = swap;
+    swap = matrix->M[1][k];
+    matrix->M[1][k] = matrix->M[1][j];
+    matrix->M[1][j] = swap;
+    swap = matrix->M[2][k];
+    matrix->M[2][k] = matrix->M[2][j];
+    matrix->M[2][j] = swap;
+    swap = matrix->M[3][k];
+    matrix->M[3][k] = matrix->M[3][j];
+    matrix->M[3][j] = swap;
+    swap = matrix->M[4][k];
+    matrix->M[4][k] = matrix->M[4][j];
+    matrix->M[4][j] = swap;
+    swap = matrix->M[5][k];
+    matrix->M[5][k] = matrix->M[5][j];
+    matrix->M[5][j] = swap;
+    swap = matrix->M[6][k];
+    matrix->M[6][k] = matrix->M[6][j];
+    matrix->M[6][j] = swap;
+    swap = matrix->M[7][k];
+    matrix->M[7][k] = matrix->M[7][j];
+    matrix->M[7][j] = swap;
+    swap = matrix->M[8][k];
+    matrix->M[8][k] = matrix->M[8][j];
+    matrix->M[8][j] = swap;
+    swap = matrix->M[9][k];
+    matrix->M[9][k] = matrix->M[9][j];
+    matrix->M[9][j] = swap;
+    swap = matrix->M[10][k];
+    matrix->M[10][k] = matrix->M[10][j];
+    matrix->M[10][j] = swap;
+    swap = matrix->M[11][k];
+    matrix->M[11][k] = matrix->M[11][j];
+    matrix->M[11][j] = swap;
+    swap = matrix->M[12][k];
+    matrix->M[12][k] = matrix->M[12][j];
+    matrix->M[12][j] = swap;
 }
 int EqualPasports(int v, int *pasport1, int *pasport2)
 {
 	sort(pasport1, pasport1+v);
-	sort(pasport2, pasport2+v);
+	sort(pasport2, pasport2+v); //приписать memcmp
 	for (int i = 0; i < v; ++i)
         if (pasport1[i] != pasport2[i])
             return 0;
@@ -35,17 +67,14 @@ int EqualPasports(int v, int *pasport1, int *pasport2)
 }
 bool Equal(Graph *graph1, Graph *graph2)        //Проверка матриц Графов на схожесть
 {
-    for (int i = 0; i < graph1->v; ++i)
-        for (int j = 0; j < graph1->v; ++j)
-            if (graph1->M[i][j] != graph2->M[i][j])
-                return 0;
-    return 1;
+    if(memcmp(graph1->M, graph2->M, sizeof(graph2->M)))
+        return 0;
+    else
+        return 1;
 }
 int perm(Graph *graph1, Graph *graph2)     //Генерация всех перестановок
 {
-    int* idx = new int[graph1->v];
-    for(int i=0;i<graph1->v;i++)
-        idx[i]=0;
+    int idx[C] = {};
     for (int i=1; i < graph1->v;)
     {
         if (idx[i] < i)
