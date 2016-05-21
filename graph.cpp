@@ -1,8 +1,12 @@
 #include "graph.h"
-void Graph::init(string str)
+void Graph::init()
 {
-	ifstream f(str);
-    f >> v;
+    cin >> v;
+    init(v);
+}
+void Graph::init(int n)
+{
+    v = n;
     ribs = 0;
     for (int i = 0; i < v; ++i)
     {
@@ -10,7 +14,7 @@ void Graph::init(string str)
         color1[i] = 0;
         for (int j = 0 ; j < v; ++j)
         {
-            f >> M[i][j];
+            cin >> M[i][j];
             if (M[i][j])
             {
                 ribs++;
@@ -19,7 +23,7 @@ void Graph::init(string str)
         }
     }
     ribs/=2;
-    G = ribs - v + 1;    
+    G = ribs - v + 1;       
 }
 
 int Graph::CompCon()
