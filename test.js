@@ -39,7 +39,7 @@ function loop(n){
         var out = stdout.split("\n").slice(0,-1);
         var r = {
             name:test,
-            time:out.length>=2?Number.parseFloat(out[0].slice(0,-2)):-1,
+            time:out.length>=2?Number.parseFloat(out[0]):-1,
             passed:out.length>=2?out[1]===tests_out[test]:out[0]===tests_out[test]
         };
         if(r.passed)tests_ok.push(test);

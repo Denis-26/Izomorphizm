@@ -81,7 +81,7 @@ int main()
 		duration = (float)(finish - start) / CLOCKS_PER_SEC;
 		TIME+=duration;
 
-        cout << setprecision(6) << duration << endl;
+        cout << duration << endl;
         cout << "NO\n";
 	}
 	else if (perm(&graph1, &graph2))                                        //Перебор всех вариантов матриц смежности.
@@ -90,7 +90,7 @@ int main()
 		duration = (float)(finish - start) / CLOCKS_PER_SEC;
 		TIME+=duration;
 
-        cout << setprecision(6) << duration << endl;
+        cout << duration << endl;
         cout << "YES\n";
     }
     else
@@ -99,7 +99,7 @@ int main()
 		duration = (float)(finish - start) / CLOCKS_PER_SEC;
 		TIME+=duration;
 
-		cout << setprecision(6) << duration << endl;
+		cout << duration << endl;
         cout << "NO\n";
     }
     return 0;
