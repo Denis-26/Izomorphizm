@@ -93,11 +93,14 @@ int Graph::ShortestCircle()
 {
     queue<int> q;
     int indx, a1 = -1, b1 = -1, count1 = 0, min1 = 10000000, V[30];
-    bool used[30] = {false};
+    
     for (int k = 0; k < v; ++k)
     {
         for (int j = 0; j < v; ++j)
             V[j] = -1;
+        bool used[30] = {false};
+
+
         count1 = 0;
         q.push(k);
         while(!q.empty())
@@ -140,7 +143,7 @@ int Graph::ShortestCircle()
     //cout << "Circle " << min1 << " ";
     return min1;
 }
-void Graph::Deikstra(int start) //переписать полностью 
+void Graph::Deikstra(int start)  
 {
     int indx;
     bool used[C] = {false};
@@ -177,6 +180,6 @@ int Graph::diamGraph()
 			if (distance1[j] > max1)
 				max1 = distance1[j];
 	}
-	cout << max1 << " ";
+	//cout << max1 << " ";
 	return max1;
 }

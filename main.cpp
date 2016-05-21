@@ -2,6 +2,7 @@
 #include <ctime>
 #include "graph.h"
 #include <algorithm>
+#include <iomanip>
 #include <fstream>
 int EqualPasports(int *pasport1, int *pasport2);
 void Swap(int k, int j, Graph *matrix);
@@ -61,17 +62,19 @@ int perm(Graph *graph1, Graph *graph2)     //Генерация всех пер�
 
 int main()  
 {
+	double TIME = 0;
+	
 	string tests[28] = {"0","00","1","01","2","02","10","010","11","011","12","012","13","013", "14","014", "15", "015", "16", "016", "17", "017","18","018","19","019","20","020"};
 	//string tests[14] = {"1","01","2","02","3","03","4","04","5","05","6","06","7","07"};
 	Graph graph1;
 	Graph graph2;    
     for (int j = 1; j<28; j+=2)
     {
-
+    	
 		string s1 = tests[j]+".in";
 	    string s2 = tests[j-1]+".in";
 		
-		float duration;
+		double duration;
     	clock_t start, finish;
     	start = clock();
 
@@ -81,53 +84,53 @@ int main()
 	    if ((graph2.v > 10) && ((graph1.ribs != graph2.ribs) || (!EqualPasports(graph1.v, graph1.pasport, graph2.pasport)) || (graph1.bipartitle() != graph2.bipartitle()) || ((graph1.G > 0 && graph2.G > 0) && (graph1.ShortestCircle() != graph2.ShortestCircle())) || (graph1.CompCon() != graph2.CompCon()) || (graph1.diamGraph() != graph2.diamGraph())))
     	{
 			finish = clock();
-	        std::cout << "Test: " << tests[j-1] << " NO: ";
-	    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
-	    	std::cout << "Time: " << duration << " ";
+			duration = (float)(finish - start) / CLOCKS_PER_SEC;
+			TIME+=duration;
 
-	    	fstream f(tests[j-1]+".out");
+			fstream f(tests[j-1]+".out");
 	    	string str;
 	    	f >> str;
-	    	if (!str.compare("NO"))
-	    		cout << "CORRECT\n";
-	    	else
-	    		cout << "UNCORRECT\n";
 
+	    	if (!str.compare("NO"))
+	    		cout << "Test(" << tests[j-1]<<") " << "NO: " << "Time[" << fixed << setprecision(6) << duration << "] -> " << "CORRECT\n";
+	    	else
+	    		cout << "Test(" << tests[j-1]<<") " << "NO: " << "Time[" << fixed << setprecision(6)<<duration << "] -> " << "UNCORRECT\n";
 	        continue;
     	}
     	if (perm(&graph1, &graph2))                                        //Перебор всех вариантов матриц смежности.
 	    {
 	    	finish = clock();
-	        std::cout << "Test: " << tests[j-1] << " YES: ";
-	    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
-	    	std::cout << "Time: " << duration << " ";
+			duration = (float)(finish - start) / CLOCKS_PER_SEC;
+			TIME+=duration;
 
-	    	fstream f(tests[j-1]+".out");
+			fstream f(tests[j-1]+".out");
 	    	string str;
 	    	f >> str;
+
 	    	if (!str.compare("YES"))
-	    		cout << "CORRECT\n";
+	    		cout << "Test(" << tests[j-1]<<") " << "YES: " << "Time[" << fixed << setprecision(6)<<duration << "] -> " << "CORRECT\n";
 	    	else
-	    		cout << "UNCORRECT\n";
+	    		cout << "Test(" << tests[j-1]<<") " << "YES: " << "Time[" << duration << "] -> " << "UNCORRECT\n";
 
 	    	continue;
 	    }
 	    else
 	    {
 	    	finish = clock();
-			std::cout << "Test: " << tests[j-1] << " NO: ";
-	    	duration = (float)(finish - start) / CLOCKS_PER_SEC;
-	    	std::cout << "Time: " << duration << " ";
+			duration = (float)(finish - start) / CLOCKS_PER_SEC;
+			TIME+=duration;
 
-	    	fstream f(tests[j-1]+".out");
+			fstream f(tests[j-1]+".out");
 	    	string str;
 	    	f >> str;
+
 	    	if (!str.compare("NO"))
-	    		cout << "CORRECT\n";
+	    		cout << "Test(" << tests[j-1]<<") " << "NO: " << "Time[" << fixed << setprecision(6) << duration << "] -> " << "CORRECT\n";
 	    	else
-	    		cout << "UNCORRECT\n";
+	    		cout << "Test(" << tests[j-1]<<") " << "NO: " << "Time[" << fixed << setprecision(6) << duration << "] -> " << "UNCORRECT\n";
 
 	    }
 	}
+	cout << "Time for all tests: " << TIME << "\n";  
     return 0;
 }
