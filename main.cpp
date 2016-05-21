@@ -84,7 +84,7 @@ int main()
         cout << setprecision(6) << duration << endl;
         cout << "NO\n";
 	}
-	if (perm(&graph1, &graph2))                                        //Перебор всех вариантов матриц смежности.
+	else if (perm(&graph1, &graph2))                                        //Перебор всех вариантов матриц смежности.
     {
     	finish = clock();
 		duration = (float)(finish - start) / CLOCKS_PER_SEC;
