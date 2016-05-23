@@ -31,7 +31,7 @@ function loop(n){
     output+=' '.repeat(15).substr(0,15-test.length);
     output+=test;
     output+='...';
-    output+=' '.repeat(5);
+    output+=' '.repeat(3);
     output+="\033[0m";
     process.stdout.write(output);
 
@@ -46,6 +46,8 @@ function loop(n){
         else        tests_er.push(test);
         var output="";
         output+=r.passed?"\033[32m":"\033[31m";
+        output+=' '.repeat(3).substr(0,3-tests_out[test].length);
+        output+=tests_out[test]+" ";
         output+=r.passed?"OK":"ERROR";
         output+=` [${r.time+'0'.repeat(8).substr(0,8-(r.time+"").length)}]`;
         output+="\033[0m\n";
@@ -69,7 +71,7 @@ function loop(n){
 console.time("All tests");
 process.stdout.write("\033[36m");
 console.log("-".repeat(50));
-console.log(`Running ${tests_in.length} tests.`);
+console.log(`Running ${tests_in.length} tests. КМБО-02-15: Kartavenko Denis`);
 console.log("-".repeat(50));
 process.stdout.write("\033[0m");
 loop(0);

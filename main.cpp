@@ -8,13 +8,21 @@ int EqualPasports(int *pasport1, int *pasport2);
 void Swap(int k, int j, Graph *matrix);
 bool Equal(Graph *graph1, Graph *graph2);
 int perm(Graph *graph1, Graph *graph2);
-const int A11 = 13;
 bool tmp[C];
 void Swap(int k, int j, Graph *matrix)       //Функция замены строк и столбцов.
 {
     memcpy(tmp, matrix->M[k], sizeof(tmp));
     memcpy(matrix->M[k], matrix->M[j], sizeof(tmp));
     memcpy(matrix->M[j], tmp, sizeof(tmp));
+    /*long long *a = (long long*) matrix->M[k];
+    long long *b = (long long*) matrix->M[j];
+    long long c = a[0];
+    a[0] = b[0];
+    b[0] = c;
+    c = a[1];
+    a[1] = b[1];
+    b[1] = c;*/
+
     bool swap;
     swap = matrix->M[0][k];
     matrix->M[0][k] = matrix->M[0][j];
@@ -59,11 +67,11 @@ void Swap(int k, int j, Graph *matrix)       //Функция замены ст�
 int EqualPasports(int v, int *pasport1, int *pasport2)
 {
 	sort(pasport1, pasport1+v);
-	sort(pasport2, pasport2+v); //приписать memcmp
-	for (int i = 0; i < v; ++i)
-        if (pasport1[i] != pasport2[i])
-            return 0;
-    return 1;
+	sort(pasport2, pasport2+v);
+    if(memcmp(pasport1, pasport2, sizeof(v)))
+	   return 0;
+    else
+        return 1;
 }
 bool Equal(Graph *graph1, Graph *graph2)        //Проверка матриц Графов на схожесть
 {
@@ -93,6 +101,7 @@ int perm(Graph *graph1, Graph *graph2)     //Генерация всех пер�
 
 int main()  
 {
+ 
 	double TIME = 0;
 	Graph graph1;
 	Graph graph2;    
@@ -104,7 +113,7 @@ int main()
 	graph1.init();
     graph2.init(graph1.v);
 	
-    if ((graph2.v > 10) && ((graph1.ribs != graph2.ribs) || (!EqualPasports(graph1.v, graph1.pasport, graph2.pasport)) || (graph1.bipartitle() != graph2.bipartitle()) || ((graph1.G > 0 && graph2.G > 0) && (graph1.ShortestCircle() != graph2.ShortestCircle())) || (graph1.CompCon() != graph2.CompCon()) || (graph1.diamGraph() != graph2.diamGraph())))
+    if ((graph2.v > 11) && ((graph1.ribs != graph2.ribs) || (!EqualPasports(graph1.v, graph1.pasport, graph2.pasport)) || (graph1.bipartitle() != graph2.bipartitle()) || ((graph1.G > 0 && graph2.G > 0) && (graph1.ShortestCircle() != graph2.ShortestCircle())) || (graph1.CompCon() != graph2.CompCon()) || (graph1.diamGraph() != graph2.diamGraph())))
 	{
 		finish = clock();
 		duration = (float)(finish - start) / CLOCKS_PER_SEC;

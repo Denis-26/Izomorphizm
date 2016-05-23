@@ -8,16 +8,16 @@
 using namespace std;
 class Graph
 {
-public:              //Поля
-    bool M[C][C];  //Главная матрица.
+public:           
+    bool M[C][C]; 
     int color1[C];
     int ribs;
     int v;
-    int G;        //Является ли граф деревом?
+    int G;        
     int pasport[C];
     int distance1[C];
 
-public:              //Функции
+public:         
 
     int CompCon();
     bool bipartitle();
