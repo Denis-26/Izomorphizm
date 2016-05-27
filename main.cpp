@@ -11,17 +11,17 @@ int perm(Graph *graph1, Graph *graph2);
 bool tmp[C];
 void Swap(int k, int j, Graph *matrix)       //Функция замены строк и столбцов.
 {
-    /*memcpy(tmp, matrix->M[k], sizeof(tmp));
+    memcpy(tmp, matrix->M[k], sizeof(tmp));
     memcpy(matrix->M[k], matrix->M[j], sizeof(tmp));
-    memcpy(matrix->M[j], tmp, sizeof(tmp));*/
-    long long *a = (long long*) matrix->M[k];
+    memcpy(matrix->M[j], tmp, sizeof(tmp));
+    /*long long *a = (long long*) matrix->M[k];
     long long *b = (long long*) matrix->M[j];
     long long c = a[0];
     a[0] = b[0];
     b[0] = c;
     c = a[1];
     a[1] = b[1];
-    b[1] = c;
+    b[1] = c;*/
 
     bool swap;
     swap = matrix->M[0][k];
