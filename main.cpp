@@ -102,42 +102,42 @@ int perm(Graph *graph1, Graph *graph2)     //Генерация всех пер�
 int main()  
 {
  
-	double TIME = 0;
+	//double TIME = 0;
 	Graph graph1;
 	Graph graph2;    
 
-	double duration;
+	/*double duration;
 	clock_t start, finish;
-	start = clock();
+	start = clock();*/
 
 	graph1.init();
     graph2.init(graph1.v);
 	
     if ((graph2.v > 10) && ((graph1.ribs != graph2.ribs) || (!EqualPasports(graph1.v, graph1.pasport, graph2.pasport)) || (graph1.bipartitle() != graph2.bipartitle()) || ((graph1.G > 0 && graph2.G > 0) && (graph1.ShortestCircle() != graph2.ShortestCircle())) || (graph1.CompCon() != graph2.CompCon()) || (graph1.diamGraph() != graph2.diamGraph())))
 	{
-		finish = clock();
+		/*finish = clock();
 		duration = (float)(finish - start) / CLOCKS_PER_SEC;
 		TIME+=duration;
 
-        cout << duration << endl;
+        cout << duration << endl;*/
         cout << "NO\n";
 	}
 	else if (perm(&graph1, &graph2))                                        //Перебор всех вариантов матриц смежности.
     {
-    	finish = clock();
+    	/*finish = clock();
 		duration = (float)(finish - start) / CLOCKS_PER_SEC;
 		TIME+=duration;
 
-        cout << duration << endl;
+        cout << duration << endl;*/
         cout << "YES\n";
     }
     else
     {
-    	finish = clock();
+    	/*finish = clock();
 		duration = (float)(finish - start) / CLOCKS_PER_SEC;
 		TIME+=duration;
 
-		cout << duration << endl;
+		cout << duration << endl;*/
         cout << "NO\n";
     }
     return 0;
